@@ -1,0 +1,82 @@
+body {
+    font-family: Arial;
+}
+
+* {
+    /* Hide all Outlines of focused Elements */
+    outline: none;
+}
+
+#rgbLabel {
+    display: inline-block;
+}
+
+#copyBt,
+#rgba,
+#request,
+#saveBt,
+#deleteBt,
+#clearInputBt,
+#reloadPresetsBt,
+#rainbowBt {
+    margin: 10px 0px;
+    height: 25px;
+    background-color: white;
+    border: solid 1px black;
+    border-radius: 5px;
+}
+
+#presets {
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.presets {
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+:not(#rgba) {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
+
+.jQWCP-wWidget.jQWCP-block.color-block {
+    background-color: white;
+    border: solid 1px black;
+    border-radius: 5px;
+    box-shadow: none;
+}
+
+/*
+.jQWCP-wSatSlider.jQWCP-slider,
+.jQWCP-wValSlider.jQWCP-slider,
+.jQWCP-wAlphaSlider.jQWCP-slider,
+.jQWCP-wPreviewBox {
+    background-color: white;
+    border: solid 1px black;
+    border-radius: 5px;
+    box-shadow: none;
+}
+*/
+
+#copyBt:active,
+#request:active,
+#saveBt:active,
+#deleteBt:active,
+#clearInputBt:active,
+#reloadPresetsBt:active,
+#rainbowBt:active,
+.presets:active {
+    /*background-color: rgb(196, 196, 196);*/
+    box-shadow: black 1px 1px 1px 1px;
+}
