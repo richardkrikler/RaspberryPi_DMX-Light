@@ -1,6 +1,5 @@
 "use strict";
 
-
 function isValidColor(c) {
     if (!c.includes(",")) {
         return false;
@@ -12,7 +11,6 @@ function isValidColor(c) {
 
     return true;
 }
-
 
 /**
  * General Buttons for input field
@@ -28,11 +26,10 @@ clearInputBt.addEventListener("click", function () {
     input.value = "";
 });
 
-
 /**
  * Post the DMX value to the light
  */
-let dmxAr = new Array(4);
+let dmxAr = [];
 
 function dmxFromInput() {
     let inputAr = input.value.split(",");
@@ -49,12 +46,11 @@ function dmxFromColorWheel(colorAr) {
 }
 
 function postDMX() {
-    let dmxArPost = new Array(4);
+    let dmxArPost = [];
     dmxArPost[0] = dmxAr[3] * 255;
     dmxArPost[1] = dmxAr[0];
     dmxArPost[2] = dmxAr[1];
     dmxArPost[3] = dmxAr[2];
-    console.log("Posting the Color: " + dmxArPost); //Can be removed
 
     var params = 'l=' + dmxArPost[0] + '&r=' + dmxArPost[1] + '&g=' + dmxArPost[2] + '&b=' + dmxArPost[3];
     post('setDMX.php', 'application/x-www-form-urlencoded', params);

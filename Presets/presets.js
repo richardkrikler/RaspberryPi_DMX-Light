@@ -1,8 +1,8 @@
 "use strict";
 
 /**
-    create, save and delete PRESETS
-*/
+ * create, save and delete PRESETS
+ */
 let saveBt = document.getElementById("saveBt");
 saveBt.addEventListener("click", function () {
     compare = input.value;
@@ -24,7 +24,6 @@ function loadPresets() {
     let presetFrame = document.getElementById("presets");
     presetFrame.innerHTML = "";
 
-
     for (let i = 0; i < presetsTxt.length - 1; i++) {
         let newPreset = document.createElement('p');
         newPreset.id = "preset" + i;
@@ -39,7 +38,7 @@ function loadPresets() {
 };
 
 
-let presetsTxt = new Array();
+let presetsTxt = [];
 
 function getPresets() {
     post('Presets/presets.txt', 'text/xml charset=utf-8', "", "setPresetsTxt");
@@ -49,7 +48,6 @@ function setPresetsTxt(text) {
     presetsTxt = text.split("\n");
     loadPresets();
 }
-
 
 /**
  * Save Preset
@@ -66,15 +64,12 @@ function savePreset() {
     post('Presets/savePreset.php', 'application/x-www-form-urlencoded', 'preset=' + compare, 'getPresets');
 }
 
-
-
 /**
  * Delete Preset
  */
-let newPresets = new Array();
+let newPresets = [];
 function deletePreset() {
     getPresets();
-
     let deletePreset = compare;
 
     if (!isValidColor(deletePreset)) {
@@ -86,8 +81,6 @@ function deletePreset() {
             newPresets.push(presetsTxt[i]);
         }
     }
-    console.log(newPresets);
-    
 
     post('Presets/deletePresets.php', '', '', 'saver');
 }

@@ -17,6 +17,7 @@
 
     <!-- Icon, which is displayed in the web browser -->
     <link rel="shortcut icon" href="favicon.png" type="image/png">
+
     <title>DMX-Light</title>
 </head>
 
@@ -27,11 +28,10 @@
             data-wcp-layout="block" data-wcp-sliders="wsvap" data-wcp-cssclass="color-block"
             data-wcp-autoresize="false">
     </p>
+
     <p>
         Selected color:
         <span class="color-preview-box"></span>
-        <!--<span class="color-preview-text"></span>-->
-        <!--<span class="color-preview-alpha"></span>-->
         <input type="button" value="Copy" id="copyBt">
     </p>
 
@@ -62,13 +62,8 @@
                 let colorAr = color.substring(5, color.length - 1).split(",");
                 dmxFromColorWheel(colorAr);
 
-
                 let alpha = $(this).wheelColorPicker('color').a;
                 $('.color-preview-box').css('background-color', color);
-                /**
-                $('.color-preview-text').text(color);
-                $('.color-preview-alpha').text(Math.round(alpha * 100) + '%');
-                */
             });
         });
     </script>
