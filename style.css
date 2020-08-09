@@ -11,14 +11,8 @@ body {
     display: inline-block;
 }
 
-#copyBt,
-#rgba,
-#request,
-#saveBt,
-#deleteBt,
-#clearInputBt,
-#reloadPresetsBt,
-#rainbowBt {
+input[type=button],
+input[type=text] {
     margin: 10px 0px;
     height: 25px;
     background-color: white;
@@ -57,13 +51,8 @@ body {
     box-shadow: none;
 }
 
-#copyBt:active,
-#request:active,
-#saveBt:active,
-#deleteBt:active,
-#clearInputBt:active,
-#reloadPresetsBt:active,
-#rainbowBt:active,
+input[type=button]:active,
+input[type=text]:active,
 .presets:active {
     box-shadow: black 1px 1px 1px 1px;
 }

@@ -25,7 +25,7 @@ function loadPresets() {
     presetFrame.innerHTML = "";
 
     for (let i = 0; i < presetsTxt.length - 1; i++) {
-        let newPreset = document.createElement('p');
+        let newPreset = document.createElement("p");
         newPreset.id = "preset" + i;
         newPreset.className = "presets";
         newPreset.style.backgroundColor = "rgba(" + presetsTxt[i] + ")";
@@ -41,7 +41,7 @@ function loadPresets() {
 let presetsTxt = [];
 
 function getPresets() {
-    post('Presets/presets.txt', 'text/xml charset=utf-8', "", "setPresetsTxt");
+    post("Presets/presets.txt", "text/xml charset=utf-8", "", "setPresetsTxt");
 }
 
 function setPresetsTxt(text) {
@@ -61,7 +61,7 @@ function savePreset() {
             return;
         }
     }
-    post('Presets/savePreset.php', 'application/x-www-form-urlencoded', 'preset=' + compare, 'getPresets');
+    post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + compare, "getPresets");
 }
 
 /**
@@ -82,7 +82,7 @@ function deletePreset() {
         }
     }
 
-    post('Presets/deletePresets.php', '', '', 'saver');
+    post("Presets/deletePresets.php", "", "", "saver");
 }
 
 let counter = 0;
@@ -90,9 +90,9 @@ function saver() {
     if (counter <= newPresets.length-1) {
         counter++;
         if (counter == newPresets.length) {
-            post('Presets/savePreset.php', 'application/x-www-form-urlencoded', 'preset=' + newPresets[counter-1], 'getPresets');
+            post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + newPresets[counter-1], "getPresets");
         } else {
-            post('Presets/savePreset.php', 'application/x-www-form-urlencoded', 'preset=' + newPresets[counter-1], 'saver');
+            post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + newPresets[counter-1], "saver");
         }
     }
 }

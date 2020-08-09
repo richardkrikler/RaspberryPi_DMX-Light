@@ -13,14 +13,14 @@ def get_interface_ipaddress(network):
     return socket.inet_ntoa(fcntl.ioctl(
         s.fileno(),
         0x8915,  # SIOCGIFADDR
-        struct.pack('256s', network[:15])
+        struct.pack("256s", network[:15])
     )[20:24])
 
-print("Current IP: " + get_interface_ipaddress('wlan0'))
+print("Current IP: " + get_interface_ipaddress("wlan0"))
 
 
 # to reload ola plugins with "localhost:9090/reload"
-OLA_IP = get_interface_ipaddress('wlan0')
+OLA_IP = get_interface_ipaddress("wlan0")
 url = "http://" + OLA_IP + ":9090/reload"
 resp = urllib.request.urlopen (url)
 
