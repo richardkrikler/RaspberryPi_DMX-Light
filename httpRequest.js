@@ -7,7 +7,7 @@ function post(url, contentType, params, func) {
 
     //Call a function when the state changes.
     http.onreadystatechange = function () {
-        if (http.readyState == 4 && http.status == 200) {
+        if (func != null && http.readyState == 4 && http.status == 200) {
             //Calling a function from it"s name as a String
             window[func](http.responseText);
         }

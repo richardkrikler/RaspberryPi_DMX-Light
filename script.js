@@ -39,10 +39,10 @@ let dmxAr = [];
 
 // get the current DMX value
 window.addEventListener("load", function () {
-    post("getDMX.php", "text/xml charset=utf-8", "", "test");
+    post("getDMX.php", "text/xml charset=utf-8", "", "getDMX");
 })
 
-function test(response) {
+function getDMX(response) {
     response = JSON.parse(response).dmx;
     input.value = response[1] + "," + response[2] + "," + response[3] + "," + (response[0] / 255);
     dmxFromInput();
