@@ -27,7 +27,7 @@ clearInputBt.addEventListener("click", function () {
 
 let turnOff = document.getElementById("turnOff");
 turnOff.addEventListener("click", function () {
-    $("#color-block").wheelColorPicker("setColor", "rgba(255,255,255,0)");
+    $("#color-block").wheelColorPicker("setColor", "rgba(0,0,0,1)");
 })
 
 
