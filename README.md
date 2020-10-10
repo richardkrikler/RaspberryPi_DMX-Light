@@ -9,8 +9,8 @@ The DMX-light is controlled by the [Open Lighting Architecture (OLA)](https://ww
         <td>Mobile</td>
     </tr>
     <tr>
-        <td><img src="https://richardkrikler.com/blog/raspberryPiDmxLight/images/desktop.png" width=480></td>
-        <td><img src="https://richardkrikler.com/blog/raspberryPiDmxLight/images/mobile.png" width=250></td>
+        <td><img src="https://richardkrikler.com/images/raspberryPiDmxLight/images/desktop.png" width=480></td>
+        <td><img src="https://richardkrikler.com/images/raspberryPiDmxLight/images/mobile.png" width=250></td>
     </tr>
 </table>
 
@@ -26,8 +26,8 @@ The setup for the DMX-light is pretty simple, because you only have to connect t
 
 <table align=center>
     <tr>
-        <td><img src="https://richardkrikler.com/blog/raspberryPiDmxLight/images/setup.png" width=480></td>
-        <td><img src="https://richardkrikler.com/blog/raspberryPiDmxLight/images/entry.png" width=680></td>
+        <td><img src="https://richardkrikler.com/images/raspberryPiDmxLight/images/setup.png" width=480></td>
+        <td><img src="https://richardkrikler.com/images/raspberryPiDmxLight/images/entry.png" width=680></td>
     </tr>
 </table>
 
@@ -53,7 +53,7 @@ su pi -c olad
 
 <table align=center>
     <tr>
-        <td><img src="https://richardkrikler.com/blog/raspberryPiDmxLight/images/etc-rc_local.png" width=480></td>
+        <td><img src="https://richardkrikler.com/images/raspberryPiDmxLight/images/etc-rc_local.png" width=480></td>
     </tr>
 </table>
 
@@ -78,7 +78,7 @@ You can configure the OLA plugins with the OLA-Web-Interface at the port :9090 (
 
 <table align=center>
     <tr>
-        <td><img src="https://richardkrikler.com/blog/raspberryPiDmxLight/images/plugins.png" width=480></td>
+        <td><img src="https://richardkrikler.com/images/raspberryPiDmxLight/images/plugins.png" width=480></td>
     </tr>
 </table>
 
@@ -88,10 +88,10 @@ The command "ola_dev_info" can also show all connected devices.
 
 <table align=center>
     <tr>
-        <td><img src="https://richardkrikler.com/blog/raspberryPiDmxLight/images/addUniverse.png" width=480></td>
+        <td><img src="https://richardkrikler.com/images/raspberryPiDmxLight/images/addUniverse.png" width=480></td>
     </tr>
     <tr>
-        <td><img src="https://richardkrikler.com/blog/raspberryPiDmxLight/images/addUniversePorts.png" width=480></td>
+        <td><img src="https://richardkrikler.com/images/raspberryPiDmxLight/images/addUniversePorts.png" width=480></td>
     </tr>
 </table>
 
@@ -101,7 +101,7 @@ Now you can enter the universe via the Web-Interface and go to the DMX-Console. 
 
 <table align=center>
     <tr>
-        <td><img src="https://richardkrikler.com/blog/raspberryPiDmxLight/images/dmxConsole.png" width=480></td>
+        <td><img src="https://richardkrikler.com/images/raspberryPiDmxLight/images/dmxConsole.png" width=480></td>
     </tr>
 </table>
 
@@ -116,7 +116,7 @@ curl -d u=1 -d d=255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0 "http://192.168.0.128:9
 ```
 <table align=center>
     <tr>
-        <td><img src="https://richardkrikler.com/blog/raspberryPiDmxLight/images/curlExample.png" width=480></td>
+        <td><img src="https://richardkrikler.com/images/raspberryPiDmxLight/images/curlExample.png" width=480></td>
     </tr>
 </table>
 
