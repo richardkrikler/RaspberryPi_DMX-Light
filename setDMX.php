@@ -15,7 +15,7 @@ function httpPost($url, $data){
 
 $data = array(
     "u" => "1",
-    "d" => $_POST["l"] . "," . $_POST["r"] . "," . $_POST["g"] . "," . $_POST["b"] . ",0,0,0,0,0,0,0,0,0,0,0,0"
+    "d" => $_POST["a"] . "," . $_POST["r"] . "," . $_POST["g"] . "," . $_POST["b"] . ",0,0,0,0,0,0,0,0,0,0,0,0"
 );
 
 $ip_server = $_SERVER["SERVER_ADDR"];

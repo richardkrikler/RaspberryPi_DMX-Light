@@ -2,6 +2,8 @@
 
 
 let colorObj;
+let colorWheel = $("#color-block");
+let colorWheelPreview = document.getElementById("color-wheel-preview");
 let colorInputField = document.getElementById("colorInputField");
 let colorRequestBt = document.getElementById("colorRequestBt");
 let clearColorInputFieldBt = document.getElementById("clearColorInputFieldBt");
@@ -11,12 +13,14 @@ let dmxTurnOffBt = document.getElementById("dmxTurnOffBt");
  * Color-Wheel change Listener
  */
 $(function () {
-    $('#color-block').on('colorchange', function (e) {
-        let colorWheelObj = $(this).wheelColorPicker('getColor');
-        colorObj = convertColorWheelToColorObj(colorWheelObj);
+    colorWheel.on('colorchange', function (e) {
+        let colorWheelObj = colorWheel.wheelColorPicker('getColor');
+        colorObj = colorWheelToColorObj(colorWheelObj);
 
         colorInputField.value = colorObjToString(colorObj);
-        $('.color-preview-box').css('background-color', $(this).wheelColorPicker('value'));
+        colorWheelPreview.style.backgroundColor = colorWheel.wheelColorPicker('value');
+
+        postDMX();
     });
 });
 
@@ -26,13 +30,44 @@ $(function () {
  * @param {*} colorWheelObj 
  * @returns Color-Object
  */
-function convertColorWheelToColorObj(colorWheelObj) {
+function colorWheelToColorObj(colorWheelObj) {
     return {
         red: Math.round(colorWheelObj.r * 255),
         green: Math.round(colorWheelObj.g * 255),
         blue: Math.round(colorWheelObj.b * 255),
         alpha: (colorWheelObj.a).toPrecision(2)
     };
+}
+
+/**
+ * Convert DMX-Object to Color-Object
+ * 
+ * @param {*} dmxColorObj 
+ * @returns Color-Object
+ */
+function dmxObjToColorObj(dmxColorObj) {
+    return {
+        red: dmxColorObj[1],
+        green: dmxColorObj[2],
+        blue: dmxColorObj[3],
+        alpha: dmxColorObj[0] / 255,
+    }
+}
+
+/**
+ * Convert RGBA-String to Color-Object
+ * 
+ * @param {*} rgbaString 
+ * @returns Color-Object
+ */
+function rgbaStringToColorObj(rgbaString) {
+    rgbaString = rgbaString.split(",");
+    return {
+        red: rgbaString[0],
+        green: rgbaString[1],
+        blue: rgbaString[2],
+        alpha: rgbaString[3],
+    }
 }
 
 /**
@@ -45,7 +80,12 @@ function colorObjToString(colorObj) {
     return colorObj.red + "," + colorObj.green + "," + colorObj.blue + "," + colorObj.alpha;
 }
 
-
+/**
+ * Update the Color-Wheel
+ */
+function updateColorWheel() {
+    colorWheel.wheelColorPicker("setColor", "rgba(" + colorObj.red + "," + colorObj.green + "," + colorObj.blue + "," + colorObj.alpha + ")");
+}
 
 function isValidColor(c) {
     if (!c.includes(",")) {
@@ -62,48 +102,33 @@ function isValidColor(c) {
 /**
  * General Buttons for input field
  */
-colorRequestBt.addEventListener("click", dmxFromInput);
+colorRequestBt.addEventListener("click", () => {
+    colorObj = rgbaStringToColorObj(colorInputField.value);
+    updateColorWheel();
+});
 clearColorInputFieldBt.addEventListener("click", () => colorInputField.value = "");
 dmxTurnOffBt.addEventListener("click", () => $("#color-block").wheelColorPicker("setColor", "rgba(255,255,255,0)"));
 
 
-/**
- * Post the DMX value to the light
- */
 
-let dmxAr = [];
 
 // get the current DMX value
 window.addEventListener("load", function () {
-    // fetch("getDMX.php")
-    // .then(response => getDMX(response));
-    post("getDMX.php", "text/xml charset=utf-8", "", "getDMX");
+    getDMX();
 })
 
-function getDMX(response) {
-    response = JSON.parse(response).dmx;
-    colorInputField.value = response[1] + "," + response[2] + "," + response[3] + "," + (response[0] / 255);
-    dmxFromInput();
-}
+async function getDMX() {
+    let result;
+    await fetch("getDMX.php")
+        .then(response => response.json())
+        .then(data => result = data.dmx);
 
-function dmxFromInput() {
-    dmxAr = colorInputField.value.split(",");
-    $("#color-block").wheelColorPicker("setColor", "rgba(" + dmxAr[0] + "," + dmxAr[1] + "," + dmxAr[2] + "," + dmxAr[3] + ")");
-}
-
-function dmxFromColorWheel(colorAr) {
-    input.value = colorAr;
-    dmxAr = colorAr;
-    postDMX();
+    colorObj = dmxObjToColorObj(result);
+    colorInputField.value = colorObjToString(colorObj);
+    updateColorWheel();
 }
 
 function postDMX() {
-    let dmxArPost = [];
-    dmxArPost[0] = dmxAr[3] * 255;
-    dmxArPost[1] = dmxAr[0];
-    dmxArPost[2] = dmxAr[1];
-    dmxArPost[3] = dmxAr[2];
-
-    let params = "l=" + dmxArPost[0] + "&r=" + dmxArPost[1] + "&g=" + dmxArPost[2] + "&b=" + dmxArPost[3];
+    let params = "a=" + (colorObj.alpha * 255) + "&r=" + colorObj.red + "&g=" + colorObj.green + "&b=" + colorObj.blue;
     post("setDMX.php", "application/x-www-form-urlencoded", params);
 }
