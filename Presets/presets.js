@@ -40,8 +40,16 @@ function loadPresets() {
 
 let presetsTxt = [];
 
-function getPresets() {
-    post("Presets/presets.txt", "text/xml charset=utf-8", "", "setPresetsTxt");
+async function getPresets() {
+    const response = await fetch("Presets/presets.txt", {
+        method: "GET",
+        headers: {
+            "Content-Type": "text/xml charset=utf-8",
+        },
+    })
+
+    console.log(response);
+    // post("Presets/presets.txt", "text/xml charset=utf-8", "", "setPresetsTxt");
 }
 
 function setPresetsTxt(text) {
@@ -55,19 +63,21 @@ function setPresetsTxt(text) {
 let compare = "";
 
 function savePreset() {
-    getPresets();
-    for (let i = 0; i < presetsTxt.length - 1; i++) {
-        if (compare === presetsTxt[i] || compare == "") {
-            return;
-        }
-    }
-    post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + compare, "getPresets");
+    // getPresets();
+    // for (let i = 0; i < presetsTxt.length - 1; i++) {
+    //     if (compare === presetsTxt[i] || compare == "") {
+    //         return;
+    //     }
+    // }
+    console.log(dmxAr);
+    post("Presets/savePreset.php", "application/x-www-form-urlencoded", "red=" + dmxAr[0] + "&green=" + dmxAr[1] + "&blue=" + dmxAr[2] + "&alpha=" + dmxAr[3], "getPresets");
 }
 
 /**
  * Delete Preset
  */
 let newPresets = [];
+
 function deletePreset() {
     getPresets();
     let deletePreset = compare;
@@ -86,13 +96,14 @@ function deletePreset() {
 }
 
 let counter = 0;
+
 function saver() {
-    if (counter <= newPresets.length-1) {
+    if (counter <= newPresets.length - 1) {
         counter++;
         if (counter == newPresets.length) {
-            post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + newPresets[counter-1], "getPresets");
+            post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + newPresets[counter - 1], "getPresets");
         } else {
-            post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + newPresets[counter-1], "saver");
+            post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + newPresets[counter - 1], "saver");
         }
     }
 }

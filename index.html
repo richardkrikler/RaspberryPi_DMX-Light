@@ -4,26 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js" defer></script>
-    <link rel="stylesheet" href="style.css">
-    <script src="Presets/presets.js" defer></script>
-    <script src="httpRequest.js" defer></script>
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
+    <title>DMX-Light</title>
+
 
     <!-- Color Picker -->
     <script src="colorWheel/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="colorWheel/jquery.wheelcolorpicker.min.js"></script>
     <link type="text/css" rel="stylesheet" href="colorWheel/wheelcolorpicker.css" />
 
-    <!-- Icon, which is displayed in the web browser -->
-    <link rel="shortcut icon" href="favicon.png" type="image/png">
 
-    <title>DMX-Light</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="Presets/presets.js" defer></script>
+    <script src="httpRequest.js" defer></script>
 </head>
 
 <body>
-
     <p>
-        <input id="color-block" type="text" value="#ff8800" data-wheelcolorpicker="" data-wcp-format="rgba"
+        <input id="color-block" type="text" value="rgba(255,255,255,0)" data-wheelcolorpicker="" data-wcp-format="rgba"
             data-wcp-layout="block" data-wcp-sliders="wsvap" data-wcp-cssclass="color-block"
             data-wcp-autoresize="false">
     </p>
@@ -31,55 +30,20 @@
     <p>
         Selected color:
         <span class="color-preview-box"></span>
-        <input type="button" value="Copy" id="copyBt">
     </p>
-
-    <style type="text/css">
-        .color-block {
-            max-width: 340px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .color-preview-box {
-            display: inline-block;
-            width: 1.25em;
-            height: 1.25em;
-            vertical-align: middle;
-            background-clip: content-box;
-
-            border: solid 1px black;
-            border-radius: 5px;
-        }
-    </style>
-    <script type="text/javascript">
-        $(function () {
-            $('#color-block').on('colorchange', function (e) {
-                let color = $(this).wheelColorPicker('value');
-
-                //Create Array for all values
-                let colorAr = color.substring(5, color.length - 1).split(",");
-                dmxFromColorWheel(colorAr);
-
-                let alpha = $(this).wheelColorPicker('color').a;
-                $('.color-preview-box').css('background-color', color);
-            });
-        });
-    </script>
 
 
     <p for="rgba" id="rgbLabel">RGBA: </p>
-    <input type="text" id="rgba">
-    <input type="button" value="CLICK!" id="request">
-    <input type="button" value="X" id="clearInputBt">
-    <input type="button" value="OFF" id="turnOff">
+    <input type="text" id="colorInputField" value="255,255,255,0">
+    <input type="button" id="colorRequestBt" value="CLICK!">
+    <input type="button" id="clearColorInputFieldBt" value="X">
+    <input type="button" id="dmxTurnOffBt" value="OFF">
     <br>
 
     <input type="button" value="Reload Presets" id="reloadPresetsBt">
     <input type="button" value="Save" id="saveBt">
     <input type="button" value="Delete" id="deleteBt">
     <div id="presets"></div>
-
 </body>
 
 </html>
