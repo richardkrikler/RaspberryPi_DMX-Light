@@ -1,45 +1,52 @@
 "use strict";
 
 class ColorObj {
+  #values;
   constructor(red, green, blue, alpha) {
-    this.red = red;
-    this.green = green;
-    this.blue = blue;
-    this.alpha = alpha;
+    this.#values = {
+      red: red,
+      green: green,
+      blue: blue,
+      alpha: alpha
+    }
+
+    this.getValues = function () {
+      return this.#values;
+    }
 
     this.setFromDmxObj = function (dmxColorObj) {
-      this.red = dmxColorObj[1];
-      this.green = dmxColorObj[2];
-      this.blue = dmxColorObj[3];
-      this.alpha = dmxColorObj[0] / 255;
+      this.#values.red = dmxColorObj[1];
+      this.#values.green = dmxColorObj[2];
+      this.#values.blue = dmxColorObj[3];
+      this.#values.alpha = dmxColorObj[0] / 255;
     }
 
     this.getDmxObj = function () {
       return {
-        red: this.red,
-        green: this.green,
-        blue: this.blue,
-        alpha: this.alpha * 255,
+        red: this.#values.red,
+        green: this.#values.green,
+        blue: this.#values.blue,
+        alpha: this.#values.alpha * 255,
       }
     }
 
     this.setFromColorWheel = function (colorWheelObj) {
-      this.red = Math.round(colorWheelObj.r * 255);
-      this.green = Math.round(colorWheelObj.g * 255);
-      this.blue = Math.round(colorWheelObj.b * 255);
-      this.alpha = (colorWheelObj.a).toPrecision(2);
+      this.#values.red = Math.round(colorWheelObj.r * 255);
+      this.#values.green = Math.round(colorWheelObj.g * 255);
+      this.#values.blue = Math.round(colorWheelObj.b * 255);
+      this.#values.alpha = (colorWheelObj.a).toPrecision(2);
     }
 
     this.setFromRgbaString = function (rgbaString) {
       rgbaString = rgbaString.split(",");
-      this.red = rgbaString[0];
-      this.green = rgbaString[1];
-      this.blue = rgbaString[2];
-      this.alpha = rgbaString[3];
+      this.#values.red = rgbaString[0];
+      this.#values.green = rgbaString[1];
+      this.#values.blue = rgbaString[2];
+      this.#values.alpha = rgbaString[3];
     }
 
     this.getRgbaString = function () {
-      return this.red + "," + this.green + "," + this.blue + "," + this.alpha;
+      return this.#values.red + "," + this.#values.green + "," + this.#values.blue + "," + this.#values.alpha;
     }
   }
 }

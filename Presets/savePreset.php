@@ -1,19 +1,15 @@
 <?php
-header("Location:../index.html");
-
 $DB = include "../db.php";
 
-$red = $_POST["red"];
-$green = $_POST["green"];
-$blue = $_POST["blue"];
-$alpha = $_POST["alpha"];
+$json_data = file_get_contents('php://input');
+$color_obj = json_decode($json_data);
 
 try {
   $stmt = $DB->prepare("INSERT INTO colors (red, green, blue, alpha) VALUE (:red, :blue, :green, :alpha)");
-  $stmt->bindParam(":red", $red, PDO::PARAM_INT);
-  $stmt->bindParam(":green", $green, PDO::PARAM_INT);
-  $stmt->bindParam(":blue", $blue, PDO::PARAM_INT);
-  $stmt->bindParam(":alpha", $alpha, PDO::PARAM_STR);
+  $stmt->bindParam(":red", $color_obj->red, PDO::PARAM_INT);
+  $stmt->bindParam(":green", $color_obj->green, PDO::PARAM_INT);
+  $stmt->bindParam(":blue", $color_obj->blue, PDO::PARAM_INT);
+  $stmt->bindParam(":alpha", $color_obj->alpha, PDO::PARAM_STR);
   $stmt->execute();
   $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException  $e) {

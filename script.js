@@ -28,7 +28,7 @@ $(function () {
  * Update the Color-Wheel
  */
 function updateColorWheel() {
-    colorWheel.wheelColorPicker("setColor", "rgba(" + currentColorObj.red + "," + currentColorObj.green + "," + currentColorObj.blue + "," + currentColorObj.alpha + ")");
+    colorWheel.wheelColorPicker("setColor", "rgba(" + currentColorObj.getRgbaString() + ")");
 }
 
 function isValidColor(c) {

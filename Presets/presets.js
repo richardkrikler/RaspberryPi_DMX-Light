@@ -1,20 +1,22 @@
 "use strict";
 
+let saveBt = document.getElementById("saveBt");
+let deleteBt = document.getElementById("deleteBt");
+let reloadPresetsBt = document.getElementById("reloadPresetsBt");
+
+
 /**
  * create, save and delete PRESETS
  */
-let saveBt = document.getElementById("saveBt");
 saveBt.addEventListener("click", function () {
-    compare = input.value;
-    savePreset();
+    compare = colorInputField.value;
+    savePreset(currentColorObj.getValues());
 });
-let deleteBt = document.getElementById("deleteBt");
 deleteBt.addEventListener("click", function () {
-    compare = input.value;
+    compare = colorInputField.value;
     deletePreset();
 });
 
-let reloadPresetsBt = document.getElementById("reloadPresetsBt");
 reloadPresetsBt.addEventListener("click", getPresets);
 
 
@@ -30,7 +32,7 @@ function loadPresets() {
         newPreset.className = "presets";
         newPreset.style.backgroundColor = "rgba(" + presetsTxt[i] + ")";
         newPreset.addEventListener("click", function () {
-            input.value = presetsTxt[i];
+            colorInputField.value = presetsTxt[i];
             dmxFromInput();
         });
         presetFrame.appendChild(newPreset);
@@ -62,15 +64,14 @@ function setPresetsTxt(text) {
  */
 let compare = "";
 
-function savePreset() {
-    // getPresets();
-    // for (let i = 0; i < presetsTxt.length - 1; i++) {
-    //     if (compare === presetsTxt[i] || compare == "") {
-    //         return;
-    //     }
-    // }
-    console.log(dmxAr);
-    post("Presets/savePreset.php", "application/x-www-form-urlencoded", "red=" + dmxAr[0] + "&green=" + dmxAr[1] + "&blue=" + dmxAr[2] + "&alpha=" + dmxAr[3], "getPresets");
+function savePreset(colorObj) {
+    fetch("Presets/savePreset.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(colorObj),
+    });
 }
 
 /**
