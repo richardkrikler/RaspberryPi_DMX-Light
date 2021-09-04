@@ -12,11 +12,11 @@ CREATE TABLE colors
     CONSTRAINT PRIMARY KEY (pk_color_id)
 );
 
-INSERT INTO colors (red, green, blue, alpha) VALUE (255, 255, 255, 0.123);
+-- INSERT INTO colors (red, green, blue, alpha) VALUE (255, 255, 255, 0.123);
 
-SELECT pk_color_id
-FROM colors
-WHERE (red = 255)
-  AND (green = 255)
-  AND (blue = 255)
-  AND (alpha = .123);
+-- SELECT pk_color_id
+-- FROM colors
+-- WHERE (red = 255)
+--   AND (green = 255)
+--   AND (blue = 255)
+--   AND (alpha = .123);
