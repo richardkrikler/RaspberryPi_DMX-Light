@@ -9,6 +9,8 @@ let dmxTurnOffBt = document.getElementById("dmxTurnOffBt");
 
 let currentColorObj = new ColorObj(255, 255, 255, 0);
 
+const rgbaRegEx = "^([0-9]{1,3},)([0-9]{1,3},)([0-9]{1,3},)((0[.][0-9]{1,2})|(0)|([.][0-9]{1,2}))$";
+
 /**
  * Color-Wheel change Listener
  */
@@ -44,27 +46,44 @@ function updateColorInputField(rgbaString) {
     colorInputField.value = rgbaString;
 }
 
-function isValidColor(c) {
-    if (!c.includes(",")) {
-        return false;
-    }
-
-    if (c == "" || c.includes(" ")) {
-        return false;
-    }
-
-    return true;
+/**
+ * Validate RGBA-String
+ * 
+ * @param {*} rgbaString RGBA-String
+ * @returns true if valid
+ */
+function isValidRgbaString(rgbaString) {
+    return rgbaString.match(rgbaRegEx) != null;
 }
 
 /**
- * General Buttons for input field
+ * Post-DMX from colorInputField value
  */
 colorRequestBt.addEventListener("click", () => {
+    if (!isValidRgbaString(colorInputField.value)) {
+        return;
+    }
+
     currentColorObj.setFromRgbaString(colorInputField.value);
+    updateColorInputField(currentColorObj.getRgbaString());
     updateColorWheel(currentColorObj.getRgbaString());
+    postDMX(currentColorObj.getDmxObj());
 });
+
+/**
+ * Clear colorInputField value
+ */
 clearColorInputFieldBt.addEventListener("click", () => colorInputField.value = "");
-dmxTurnOffBt.addEventListener("click", () => $("#color-block").wheelColorPicker("setColor", "rgba(255,255,255,0)"));
+
+/**
+ * Turn-Off: set the alpha value to 0
+ */
+dmxTurnOffBt.addEventListener("click", () => {
+    currentColorObj.getValues().alpha = 0;
+    updateColorInputField(currentColorObj.getRgbaString());
+    updateColorWheel(currentColorObj.getRgbaString());
+    postDMX(currentColorObj.getDmxObj());
+});
 
 /**
  * On Window-load call getDMX to get the current Color
