@@ -12,23 +12,36 @@ let currentColorObj = new ColorObj(255, 255, 255, 0);
 /**
  * Color-Wheel change Listener
  */
-$(function () {
-    colorWheel.on('colorchange', function (e) {
-        let colorWheelObj = colorWheel.wheelColorPicker('getColor');
-        currentColorObj.setFromColorWheel(colorWheelObj);
+colorWheel.on('colorchange', colorWheelEvent);
 
-        colorInputField.value = currentColorObj.getRgbaString();
-        colorWheelPreview.style.backgroundColor = colorWheel.wheelColorPicker('value');
+function colorWheelEvent() {
+    let colorWheelObj = colorWheel.wheelColorPicker('getColor');
+    currentColorObj.setFromColorWheel(colorWheelObj);
 
-        postDMX(currentColorObj.getDmxObj());
-    });
-});
+    updateColorInputField(currentColorObj.getRgbaString());
+    colorWheelPreview.style.backgroundColor = colorWheel.wheelColorPicker('value');
+
+    postDMX(currentColorObj.getDmxObj());
+}
 
 /**
  * Update the Color-Wheel
+ * 
+ * @param {*} rgbaString RGBA-String
  */
-function updateColorWheel() {
-    colorWheel.wheelColorPicker("setColor", "rgba(" + currentColorObj.getRgbaString() + ")");
+function updateColorWheel(rgbaString) {
+    colorWheel.off();
+    colorWheel.wheelColorPicker("setColor", "rgba(" + rgbaString + ")");
+    colorWheel.on('colorchange', colorWheelEvent);
+}
+
+/**
+ * Update the Color-Input-Field
+ * 
+ * @param {*} rgbaString RGBA-String
+ */
+function updateColorInputField(rgbaString) {
+    colorInputField.value = rgbaString;
 }
 
 function isValidColor(c) {
@@ -48,7 +61,7 @@ function isValidColor(c) {
  */
 colorRequestBt.addEventListener("click", () => {
     currentColorObj.setFromRgbaString(colorInputField.value);
-    updateColorWheel();
+    updateColorWheel(currentColorObj.getRgbaString());
 });
 clearColorInputFieldBt.addEventListener("click", () => colorInputField.value = "");
 dmxTurnOffBt.addEventListener("click", () => $("#color-block").wheelColorPicker("setColor", "rgba(255,255,255,0)"));
@@ -56,9 +69,7 @@ dmxTurnOffBt.addEventListener("click", () => $("#color-block").wheelColorPicker(
 /**
  * On Window-load call getDMX to get the current Color
  */
-window.addEventListener("load", function () {
-    getDMX();
-});
+window.addEventListener("load", getDMX);
 
 /**
  * Get the current Color
@@ -70,8 +81,8 @@ async function getDMX() {
         .then(data => result = data.dmx);
 
     currentColorObj.setFromDmxObj(result);
-    colorInputField.value = currentColorObj.getRgbaString();
-    updateColorWheel();
+    updateColorInputField(currentColorObj.getRgbaString());
+    updateColorWheel(currentColorObj.getRgbaString());
 }
 
 /**

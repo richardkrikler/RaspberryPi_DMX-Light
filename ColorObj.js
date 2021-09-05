@@ -14,11 +14,18 @@ class ColorObj {
       return this.#values;
     }
 
+    this.setFromJson = function (colorJson) {
+      this.#values.red = colorJson.red;
+      this.#values.green = colorJson.green;
+      this.#values.blue = colorJson.blue;
+      this.#values.alpha = colorJson.alpha;
+    }
+
     this.setFromDmxObj = function (dmxColorObj) {
       this.#values.red = dmxColorObj[1];
       this.#values.green = dmxColorObj[2];
       this.#values.blue = dmxColorObj[3];
-      this.#values.alpha = dmxColorObj[0] / 255;
+      this.#values.alpha = (dmxColorObj[0] / 255).toPrecision(2);
     }
 
     this.getDmxObj = function () {
