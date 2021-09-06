@@ -25,6 +25,7 @@ function loadPresets() {
             currentColorObj.setFromJson(preset);
             updateColorInputField(currentColorObj.getRgbaString());
             updateColorWheel(currentColorObj.getRgbaString());
+            updateColorWheelPreview(currentColorObj.getRgbaString());
             postDMX(currentColorObj.getDmxObj());
         });
         presetFrame.appendChild(newPreset);

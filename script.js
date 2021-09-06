@@ -21,8 +21,7 @@ function colorWheelEvent() {
     currentColorObj.setFromColorWheel(colorWheelObj);
 
     updateColorInputField(currentColorObj.getRgbaString());
-    colorWheelPreview.style.backgroundColor = colorWheel.wheelColorPicker('value');
-
+    updateColorWheelPreview(currentColorObj.getRgbaString());
     postDMX(currentColorObj.getDmxObj());
 }
 
@@ -35,6 +34,15 @@ function updateColorWheel(rgbaString) {
     colorWheel.off();
     colorWheel.wheelColorPicker("setColor", "rgba(" + rgbaString + ")");
     colorWheel.on('colorchange', colorWheelEvent);
+}
+
+/**
+ * Update the Color-Wheel-Preview
+ * 
+ * @param {*} rgbaString RGBA-String
+ */
+ function updateColorWheelPreview(rgbaString) {
+    colorWheelPreview.style.backgroundColor = "rgba(" + rgbaString + ")";
 }
 
 /**
@@ -67,6 +75,7 @@ colorRequestBt.addEventListener("click", () => {
     currentColorObj.setFromRgbaString(colorInputField.value);
     updateColorInputField(currentColorObj.getRgbaString());
     updateColorWheel(currentColorObj.getRgbaString());
+    updateColorWheelPreview(currentColorObj.getRgbaString());
     postDMX(currentColorObj.getDmxObj());
 });
 
@@ -82,6 +91,7 @@ dmxTurnOffBt.addEventListener("click", () => {
     currentColorObj.getValues().alpha = 0;
     updateColorInputField(currentColorObj.getRgbaString());
     updateColorWheel(currentColorObj.getRgbaString());
+    updateColorWheelPreview(currentColorObj.getRgbaString());
     postDMX(currentColorObj.getDmxObj());
 });
 
@@ -102,6 +112,7 @@ async function getDMX() {
     currentColorObj.setFromDmxObj(result);
     updateColorInputField(currentColorObj.getRgbaString());
     updateColorWheel(currentColorObj.getRgbaString());
+    updateColorWheelPreview(currentColorObj.getRgbaString());
 }
 
 /**
