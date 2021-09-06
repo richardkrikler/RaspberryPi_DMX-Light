@@ -8,6 +8,6 @@ CREATE TABLE colors
     red         INTEGER,
     green       INTEGER,
     blue        INTEGER,
-    alpha       DECIMAL(3, 3),
+    alpha       DECIMAL(3, 2),
     CONSTRAINT PRIMARY KEY (pk_color_id)
 );
