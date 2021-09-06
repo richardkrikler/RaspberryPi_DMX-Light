@@ -9,13 +9,14 @@ let presetFrame = document.getElementById("presets");
 /**
  * Click&Load-Listener: Get-Presets
  */
-window.addEventListener("load", getPresets);
-reloadPresetsBt.addEventListener("click", getPresets);
+window.addEventListener("load", loadPresets);
+reloadPresetsBt.addEventListener("click", loadPresets);
 
 /**
  * Load-Presets: Display presetsJson to User
  */
-function loadPresets() {
+async function loadPresets() {
+    let presetsJson = await getPresets();
     presetFrame.innerHTML = "";
     presetsJson.forEach(preset => {
         let newPreset = document.createElement("p");
@@ -32,18 +33,15 @@ function loadPresets() {
     });
 };
 
-
-let presetsJson;
-
 /**
  * Get-Presets: Get the Presets from DB
- * and call loadPresets()
  */
 async function getPresets() {
+    let result = [];
     await fetch("presets/getPresets.php")
         .then(response => response.json())
-        .then(data => presetsJson = data);
-    loadPresets();
+        .then(data => result = data);
+    return result;
 }
 
 /**
@@ -67,7 +65,7 @@ function savePreset(colorObjValues) {
         body: JSON.stringify(colorObjValues),
     }).then(response => {
         if (response.ok) {
-            getPresets();
+            loadPresets();
         }
     });
 }
@@ -93,7 +91,7 @@ function deletePreset(colorObjValues) {
         body: JSON.stringify(colorObjValues),
     }).then(response => {
         if (response.ok) {
-            getPresets();
+            loadPresets();
         }
     });
 }
