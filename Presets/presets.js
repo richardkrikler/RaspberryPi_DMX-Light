@@ -13,8 +13,7 @@ saveBt.addEventListener("click", function () {
     savePreset(currentColorObj.getValues());
 });
 deleteBt.addEventListener("click", function () {
-    compare = colorInputField.value;
-    deletePreset();
+    deletePreset(currentColorObj.getValues());
 });
 
 reloadPresetsBt.addEventListener("click", getPresets);
@@ -60,19 +59,12 @@ function savePreset(colorObjValues) {
 }
 
 
-function deletePreset() {
-    getPresets();
-    let deletePreset = compare;
-
-    if (!isValidColor(deletePreset)) {
-        return;
-    }
-
-    for (let i = 0; i < presetsTxt.length - 1; i++) {
-        if (deletePreset !== presetsTxt[i]) {
-            newPresets.push(presetsTxt[i]);
-        }
-    }
-
-    post("presets/deletePresets.php", "", "", "saver");
+function deletePreset(colorObjValues) {
+    fetch("presets/deletePreset.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(colorObjValues),
+    });
 }
