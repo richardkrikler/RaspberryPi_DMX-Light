@@ -2,7 +2,7 @@
 $server = "db";
 $dbname = "raspberrypi_dmx";
 $username = "root";
-$password = "cisco";
+$password = "yourPassword";
 $DB;
 
 try {
