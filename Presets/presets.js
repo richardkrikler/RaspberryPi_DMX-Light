@@ -1,98 +1,97 @@
 "use strict";
 
-/**
- * create, save and delete PRESETS
- */
 let saveBt = document.getElementById("saveBt");
-saveBt.addEventListener("click", function () {
-    compare = input.value;
-    savePreset();
-});
 let deleteBt = document.getElementById("deleteBt");
-deleteBt.addEventListener("click", function () {
-    compare = input.value;
-    deletePreset();
-});
-
 let reloadPresetsBt = document.getElementById("reloadPresetsBt");
-reloadPresetsBt.addEventListener("click", getPresets);
+let presetFrame = document.getElementById("presets");
 
 
-window.addEventListener("load", getPresets);
+/**
+ * Click&Load-Listener: Get-Presets
+ */
+window.addEventListener("load", loadPresets);
+reloadPresetsBt.addEventListener("click", loadPresets);
 
-function loadPresets() {
-    let presetFrame = document.getElementById("presets");
+/**
+ * Load-Presets: Display presetsJson to User
+ */
+async function loadPresets() {
+    let presetsJson = await getPresets();
     presetFrame.innerHTML = "";
-
-    for (let i = 0; i < presetsTxt.length - 1; i++) {
+    presetsJson.forEach(preset => {
         let newPreset = document.createElement("p");
-        newPreset.id = "preset" + i;
         newPreset.className = "presets";
-        newPreset.style.backgroundColor = "rgba(" + presetsTxt[i] + ")";
+        newPreset.style.backgroundColor = "rgba(" + preset.red + "," + preset.green + "," + preset.blue + "," + preset.alpha + ")";
         newPreset.addEventListener("click", function () {
-            input.value = presetsTxt[i];
-            dmxFromInput();
+            currentColorObj.setFromJson(preset);
+            updateColorInputField(currentColorObj.getRgbaString());
+            updateColorWheel(currentColorObj.getRgbaString());
+            updateColorWheelPreview(currentColorObj.getRgbaString());
+            postDMX(currentColorObj.getDmxObj());
         });
         presetFrame.appendChild(newPreset);
-    }
+    });
 };
 
-
-let presetsTxt = [];
-
-function getPresets() {
-    post("Presets/presets.txt", "text/xml charset=utf-8", "", "setPresetsTxt");
-}
-
-function setPresetsTxt(text) {
-    presetsTxt = text.split("\n");
-    loadPresets();
+/**
+ * Get-Presets: Get the Presets from DB
+ */
+async function getPresets() {
+    let result = [];
+    await fetch("presets/getPresets.php")
+        .then(response => response.json())
+        .then(data => result = data);
+    return result;
 }
 
 /**
- * Save Preset
+ * Click-Listener: Save-Preset
  */
-let compare = "";
+saveBt.addEventListener("click", function () {
+    savePreset(currentColorObj.getValues());
+});
 
-function savePreset() {
-    getPresets();
-    for (let i = 0; i < presetsTxt.length - 1; i++) {
-        if (compare === presetsTxt[i] || compare == "") {
-            return;
+/**
+ * Save-Preset to DB
+ * 
+ * @param {*} colorObjValues JSON-Object of RGBA-Values
+ */
+function savePreset(colorObjValues) {
+    fetch("presets/savePreset.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(colorObjValues),
+    }).then(response => {
+        if (response.ok) {
+            loadPresets();
         }
-    }
-    post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + compare, "getPresets");
+    });
 }
 
 /**
- * Delete Preset
+ * Click-Listener: Delete-Preset
  */
-let newPresets = [];
-function deletePreset() {
-    getPresets();
-    let deletePreset = compare;
+deleteBt.addEventListener("click", function () {
+    deletePreset(currentColorObj.getValues());
+});
 
-    if (!isValidColor(deletePreset)) {
-        return;
-    }
-
-    for (let i = 0; i < presetsTxt.length - 1; i++) {
-        if (deletePreset !== presetsTxt[i]) {
-            newPresets.push(presetsTxt[i]);
+/**
+ * Delete-Preset from DB
+ * 
+ * @param {*} colorObjValues JSON-Object of RGBA-Values
+ */
+function deletePreset(colorObjValues) {
+    fetch("presets/deletePreset.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(colorObjValues),
+    }).then(response => {
+        if (response.ok) {
+            loadPresets();
         }
-    }
-
-    post("Presets/deletePresets.php", "", "", "saver");
-}
-
-let counter = 0;
-function saver() {
-    if (counter <= newPresets.length-1) {
-        counter++;
-        if (counter == newPresets.length) {
-            post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + newPresets[counter-1], "getPresets");
-        } else {
-            post("Presets/savePreset.php", "application/x-www-form-urlencoded", "preset=" + newPresets[counter-1], "saver");
-        }
-    }
+    });
 }

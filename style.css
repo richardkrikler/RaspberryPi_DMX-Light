@@ -35,13 +35,13 @@ input[type=text] {
     border-radius: 5px;
 }
 
-:not(#rgba) {
+/* :not(#rgba) {
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
     user-select: none;
-}
+} */
 
 
 .jQWCP-wWidget.jQWCP-block.color-block {
@@ -55,4 +55,22 @@ input[type=button]:active,
 input[type=text]:active,
 .presets:active {
     box-shadow: black 1px 1px 1px 1px;
+}
+
+/* Color Wheel */
+.color-block {
+    max-width: 340px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#color-wheel-preview {
+    display: inline-block;
+    width: 1.25em;
+    height: 1.25em;
+    vertical-align: middle;
+    background-clip: content-box;
+
+    border: solid 1px black;
+    border-radius: 5px;
 }

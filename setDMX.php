@@ -1,24 +1,20 @@
 <?php
-header("Location:index.html");
-
-function httpPost($url, $data){
-	$options = array(
-		"http" => array(
-     		"header"  => "Content-type: application/x-www-form-urlencoded\r\n",
-        	"method"  => "POST",
-        	"content" => http_build_query($data)
-    	)
-    );
-	$context  = stream_context_create($options);
-	return file_get_contents($url, false, $context);
-}
-
+$json_data = file_get_contents('php://input');
+$color_obj = json_decode($json_data);
 $data = array(
-    "u" => "1",
-    "d" => $_POST["l"] . "," . $_POST["r"] . "," . $_POST["g"] . "," . $_POST["b"] . ",0,0,0,0,0,0,0,0,0,0,0,0"
+	"u" => "1",
+	"d" => $color_obj->alpha . "," . $color_obj->red . "," . $color_obj->green . "," . $color_obj->blue . ",0,0,0,0,0,0,0,0,0,0,0,0"
 );
 
 $ip_server = $_SERVER["SERVER_ADDR"];
-$response = httpPost("http://" . $ip_server . ":9090/set_dmx", $data);
+$url= "http://" . $ip_server . ":9090/set_dmx";
 
-?>
+$options = array(
+	"http" => array(
+		"header"  => "Content-type: application/x-www-form-urlencoded\r\n",
+		"method"  => "POST",
+		"content" => http_build_query($data)
+	)
+);
+$context  = stream_context_create($options);
+file_get_contents($url, false, $context);

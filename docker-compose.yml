@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: yourPassword
+    ports:
+      - 3306:3306
+
+  php-apache:
+    image: php_mysql-pdo
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www/html/
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - 81:80

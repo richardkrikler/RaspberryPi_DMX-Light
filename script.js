@@ -1,84 +1,131 @@
 "use strict";
 
-function isValidColor(c) {
-    if (!c.includes(",")) {
-        return false;
+let colorWheel = $("#color-block");
+let colorWheelPreview = document.getElementById("color-wheel-preview");
+let colorInputField = document.getElementById("colorInputField");
+let colorRequestBt = document.getElementById("colorRequestBt");
+let clearColorInputFieldBt = document.getElementById("clearColorInputFieldBt");
+let dmxTurnOffBt = document.getElementById("dmxTurnOffBt");
+
+let currentColorObj = new ColorObj(255, 255, 255, 0);
+
+const rgbaRegEx = "^([0-9]{1,3},)([0-9]{1,3},)([0-9]{1,3},)((0[.][0-9]{1,2})|(0)|([.][0-9]{1,2}))$";
+
+/**
+ * Color-Wheel change Listener
+ */
+colorWheel.on('colorchange', colorWheelEvent);
+
+function colorWheelEvent() {
+    let colorWheelObj = colorWheel.wheelColorPicker('getColor');
+    currentColorObj.setFromColorWheel(colorWheelObj);
+
+    updateColorInputField(currentColorObj.getRgbaString());
+    updateColorWheelPreview(currentColorObj.getRgbaString());
+    postDMX(currentColorObj.getDmxObj());
+}
+
+/**
+ * Update the Color-Wheel
+ * 
+ * @param {*} rgbaString RGBA-String
+ */
+function updateColorWheel(rgbaString) {
+    colorWheel.off();
+    colorWheel.wheelColorPicker("setColor", "rgba(" + rgbaString + ")");
+    colorWheel.on('colorchange', colorWheelEvent);
+}
+
+/**
+ * Update the Color-Wheel-Preview
+ * 
+ * @param {*} rgbaString RGBA-String
+ */
+ function updateColorWheelPreview(rgbaString) {
+    colorWheelPreview.style.backgroundColor = "rgba(" + rgbaString + ")";
+}
+
+/**
+ * Update the Color-Input-Field
+ * 
+ * @param {*} rgbaString RGBA-String
+ */
+function updateColorInputField(rgbaString) {
+    colorInputField.value = rgbaString;
+}
+
+/**
+ * Validate RGBA-String
+ * 
+ * @param {*} rgbaString RGBA-String
+ * @returns true if valid
+ */
+function isValidRgbaString(rgbaString) {
+    return rgbaString.match(rgbaRegEx) != null;
+}
+
+/**
+ * Post-DMX from colorInputField value
+ */
+colorRequestBt.addEventListener("click", () => {
+    if (!isValidRgbaString(colorInputField.value)) {
+        return;
     }
 
-    if (c == "" || c.includes(" ")) {
-        return false;
-    }
-
-    return true;
-}
-
-/**
- * General Buttons for input field
- */
-let requestBt = document.getElementById("request");
-requestBt.addEventListener("click", dmxFromInput);
-let input = document.getElementById("rgba");
-input.addEventListener("change", dmxFromInput);
-
-let clearInputBt = document.getElementById("clearInputBt");
-clearInputBt.addEventListener("click", function () {
-    input.value = "";
+    currentColorObj.setFromRgbaString(colorInputField.value);
+    updateColorInputField(currentColorObj.getRgbaString());
+    updateColorWheel(currentColorObj.getRgbaString());
+    updateColorWheelPreview(currentColorObj.getRgbaString());
+    postDMX(currentColorObj.getDmxObj());
 });
 
-let turnOff = document.getElementById("turnOff");
-turnOff.addEventListener("click", function () {
-    $("#color-block").wheelColorPicker("setColor", "rgba(0,0,0,1)");
-})
-
+/**
+ * Clear colorInputField value
+ */
+clearColorInputFieldBt.addEventListener("click", () => colorInputField.value = "");
 
 /**
- * Post the DMX value to the light
+ * Turn-Off: set the alpha value to 0
  */
-
-let dmxAr = [];
-
-// get the current DMX value
-window.addEventListener("load", function () {
-    post("getDMX.php", "text/xml charset=utf-8", "", "getDMX");
-})
-
-function getDMX(response) {
-    response = JSON.parse(response).dmx;
-    input.value = response[1] + "," + response[2] + "," + response[3] + "," + (response[0] / 255);
-    dmxFromInput();
-}
-
-function dmxFromInput() {
-    dmxAr = input.value.split(",");
-    $("#color-block").wheelColorPicker("setColor", "rgba(" + dmxAr[0] + "," + dmxAr[1] + "," + dmxAr[2] + "," + dmxAr[3] + ")");
-}
-
-function dmxFromColorWheel(colorAr) {
-    input.value = colorAr;
-    dmxAr = colorAr;
-    postDMX();
-}
-
-function postDMX() {
-    let dmxArPost = [];
-    dmxArPost[0] = dmxAr[3] * 255;
-    dmxArPost[1] = dmxAr[0];
-    dmxArPost[2] = dmxAr[1];
-    dmxArPost[3] = dmxAr[2];
-
-    let params = "l=" + dmxArPost[0] + "&r=" + dmxArPost[1] + "&g=" + dmxArPost[2] + "&b=" + dmxArPost[3];
-    post("setDMX.php", "application/x-www-form-urlencoded", params);
-}
-
-/**
- * Copy Color to clipboard
- */
-let copyBt = document.getElementById("copyBt");
-copyBt.addEventListener("click", function () {
-    /* Select the text field */
-    input.select();
-    input.setSelectionRange(0, 99999); /*For mobile devices*/
-
-    /* Copy the text inside the text field */
-    document.execCommand("copy");
+dmxTurnOffBt.addEventListener("click", () => {
+    currentColorObj.getValues().alpha = 0;
+    updateColorInputField(currentColorObj.getRgbaString());
+    updateColorWheel(currentColorObj.getRgbaString());
+    updateColorWheelPreview(currentColorObj.getRgbaString());
+    postDMX(currentColorObj.getDmxObj());
 });
+
+/**
+ * On Window-load call getDMX to get the current Color
+ */
+window.addEventListener("load", getDMX);
+
+/**
+ * Get the current Color
+ */
+async function getDMX() {
+    let result;
+    await fetch("getDMX.php")
+        .then(response => response.json())
+        .then(data => result = data.dmx);
+
+    currentColorObj.setFromDmxObj(result);
+    updateColorInputField(currentColorObj.getRgbaString());
+    updateColorWheel(currentColorObj.getRgbaString());
+    updateColorWheelPreview(currentColorObj.getRgbaString());
+}
+
+/**
+ * Send DMX-Object as JSON to setDMX.php
+ * 
+ * @param {*} dmxObj 
+ */
+function postDMX(dmxObj) {
+    fetch("setDMX.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dmxObj),
+    });
+}
