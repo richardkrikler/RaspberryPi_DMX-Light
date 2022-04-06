@@ -16,8 +16,8 @@ The DMX-light is controlled by the [Open Lighting Architecture (OLA)](https://ww
 
 
 ## Components
-- [DMX-Licht](https://amzn.to/359NkA3)
-- [DMX zu USB Adapter](https://amzn.to/31N9SEu)
+- [DMX-Light](https://amzn.to/359NkA3)
+- [DMX to USB Adapter](https://amzn.to/31N9SEu)
 - [RaspberryPi](https://amzn.to/3jB3ZjN)
 
 
