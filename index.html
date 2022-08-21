@@ -1,49 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="favicon.png" type="image/png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="favicon.png" type="image/png" />
     <title>DMX-Light</title>
-
 
     <!-- Color Picker -->
     <script src="colorWheel/jquery-3.4.1.js"></script>
-    <script type="text/javascript" src="colorWheel/jquery.wheelcolorpicker.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="colorWheel/wheelcolorpicker.css" />
-
+    <script
+      type="text/javascript"
+      src="colorWheel/jquery.wheelcolorpicker.min.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="colorWheel/wheelcolorpicker.css" />
 
     <script src="ColorObj.js"></script>
     <script src="script.js" defer></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="presets/presets.js" defer></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <p>
-        <input id="color-block" type="text" value="rgba(255,255,255,0)" data-wheelcolorpicker="" data-wcp-format="rgba"
-            data-wcp-layout="block" data-wcp-sliders="wsvap" data-wcp-cssclass="color-block"
-            data-wcp-autoresize="false">
+      <input
+        id="color-block"
+        type="text"
+        value="rgba(255,255,255,0)"
+        data-wheelcolorpicker=""
+        data-wcp-format="rgba"
+        data-wcp-layout="block"
+        data-wcp-sliders="wsvap"
+        data-wcp-cssclass="color-block"
+        data-wcp-autoresize="false" />
     </p>
 
     <p>
-        Selected color:
-        <span id="color-wheel-preview"></span>
+      Selected color:
+      <span id="color-wheel-preview"></span>
     </p>
 
+    <p for="rgba" id="rgbLabel">RGBA:</p>
+    <input type="text" id="colorInputField" value="255,255,255,0" />
+    <input type="button" id="colorRequestBt" value="CLICK!" />
+    <input type="button" id="clearColorInputFieldBt" value="X" />
+    <input type="button" id="dmxTurnOffBt" value="OFF" />
+    <br />
 
-    <p for="rgba" id="rgbLabel">RGBA: </p>
-    <input type="text" id="colorInputField" value="255,255,255,0">
-    <input type="button" id="colorRequestBt" value="CLICK!">
-    <input type="button" id="clearColorInputFieldBt" value="X">
-    <input type="button" id="dmxTurnOffBt" value="OFF">
-    <br>
-
-    <input type="button" value="Reload Presets" id="reloadPresetsBt">
-    <input type="button" value="Save" id="saveBt">
-    <input type="button" value="Delete" id="deleteBt">
+    <input type="button" value="Reload Presets" id="reloadPresetsBt" />
+    <input type="button" value="Save" id="saveBt" />
+    <input type="button" value="Delete" id="deleteBt" />
     <div id="presets"></div>
-</body>
-
+  </body>
 </html>
