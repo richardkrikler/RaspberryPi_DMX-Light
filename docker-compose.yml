@@ -7,12 +7,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: yourPassword
     ports:
-      - 3306:3306
+      - 1041:3306
 
   php-apache:
     image: php_mysql-pdo
     ports:
-      - 80:80
+      - 1040:80
     volumes:
       - ./:/var/www/html/
 
@@ -22,6 +22,6 @@ services:
       - db
     environment:
       PMA_HOST: db
-      PMA_PORT: 3306
+      PMA_PORT: 1041
     ports:
-      - 81:80
+      - 1042:80

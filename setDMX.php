@@ -6,7 +6,7 @@ $data = array(
 	"d" => $color_obj->alpha . "," . $color_obj->red . "," . $color_obj->green . "," . $color_obj->blue . ",0,0,0,0,0,0,0,0,0,0,0,0"
 );
 
-$ip_server = $_SERVER["SERVER_ADDR"];
+$ip_server = $_SERVER["SERVER_NAME"];
 $url= "http://" . $ip_server . ":9090/set_dmx";
 
 $options = array(

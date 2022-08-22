@@ -143,7 +143,7 @@ sudo git clone https://github.com/RichardKrikler/RaspberryPi_DMX-Light
 Permissions for the file "presets.txt" (global read & write).
 
 ```shell
-sudo chmod 06 /var/www/html/Presets/presets.txt
+sudo chmod 06 /var/www/html/presets/presets.txt
 ```
 
 That's it. Now you can easily get to the Interface via the IP-Adress.
