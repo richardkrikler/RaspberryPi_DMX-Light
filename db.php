@@ -18,4 +18,3 @@ try {
 }
 
 return $DB;
-

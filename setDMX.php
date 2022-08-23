@@ -7,7 +7,7 @@ $data = array(
 );
 
 $ip_server = $_SERVER["SERVER_NAME"];
-$url= "http://" . $ip_server . ":9090/set_dmx";
+$url = "http://" . $ip_server . ":9090/set_dmx";
 
 $options = array(
 	"http" => array(

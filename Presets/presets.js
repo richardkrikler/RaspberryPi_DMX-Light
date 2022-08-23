@@ -28,7 +28,7 @@ async function loadPresets() {
       ',' +
       preset.alpha +
       ')'
-    newPreset.addEventListener('click', function () {
+    newPreset.addEventListener('click', () => {
       currentColorObj.setFromJson(preset)
       updateColorInputField(currentColorObj.getRgbaString())
       updateColorWheel(currentColorObj.getRgbaString())
@@ -53,7 +53,7 @@ async function getPresets() {
 /**
  * Click-Listener: Save-Preset
  */
-saveBt.addEventListener('click', function () {
+saveBt.addEventListener('click', () => {
   savePreset(currentColorObj.getValues())
 })
 

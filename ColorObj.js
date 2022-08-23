@@ -8,25 +8,25 @@ class ColorObj {
       alpha: alpha
     }
 
-    this.getValues = function () {
+    this.getValues = () => {
       return this.#values
     }
 
-    this.setFromJson = function (colorJson) {
+    this.setFromJson = colorJson => {
       this.#values.red = colorJson.red
       this.#values.green = colorJson.green
       this.#values.blue = colorJson.blue
       this.#values.alpha = colorJson.alpha
     }
 
-    this.setFromDmxObj = function (dmxColorObj) {
+    this.setFromDmxObj = dmxColorObj => {
       this.#values.red = dmxColorObj[1]
       this.#values.green = dmxColorObj[2]
       this.#values.blue = dmxColorObj[3]
       this.#values.alpha = (dmxColorObj[0] / 255).toPrecision(2)
     }
 
-    this.getDmxObj = function () {
+    this.getDmxObj = () => {
       return {
         red: this.#values.red,
         green: this.#values.green,
@@ -35,14 +35,14 @@ class ColorObj {
       }
     }
 
-    this.setFromColorWheel = function (colorWheelObj) {
+    this.setFromColorWheel = colorWheelObj => {
       this.#values.red = Math.round(colorWheelObj.r * 255)
       this.#values.green = Math.round(colorWheelObj.g * 255)
       this.#values.blue = Math.round(colorWheelObj.b * 255)
       this.#values.alpha = colorWheelObj.a.toPrecision(2)
     }
 
-    this.setFromRgbaString = function (rgbaString) {
+    this.setFromRgbaString = rgbaString => {
       rgbaString = rgbaString.split(',')
       this.#values.red = rgbaString[0]
       this.#values.green = rgbaString[1]
@@ -50,7 +50,7 @@ class ColorObj {
       this.#values.alpha = rgbaString[3]
     }
 
-    this.getRgbaString = function () {
+    this.getRgbaString = () => {
       return (
         this.#values.red +
         ',' +
