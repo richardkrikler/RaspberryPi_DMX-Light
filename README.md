@@ -134,6 +134,13 @@ curl -d u=1 -d d=255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0 "http://192.168.0.128:9
 
 ## My Web-Interface
 
+SQLite3 PHP Driver:
+
+```bash
+sudo apt-get install php8.1-sqlite
+sudo /etc/init.d/apache2 restart
+```
+
 Clone my repository into the folder "/var/www/html".
 
 ```bash
@@ -143,12 +150,13 @@ sudo git clone https://github.com/RichardKrikler/RaspberryPi_DMX-Light
 Create presets database.
 
 ```bash
-cat db.sql | sqlite3 presets/raspi-dmx.db
+sudo cat db.sql | sudo sqlite3 presets/raspi-dmx.db
 ```
 
-Permissions for the database to not be read-only (global read & write).
+Permissions for the database to not be read-only (global read & write; database file and the folder it resides in).
 
 ```bash
+sudo chmod 777 /var/www/html/presets
 sudo chmod 777 /var/www/html/presets/raspi-dmx.db
 ```
 
