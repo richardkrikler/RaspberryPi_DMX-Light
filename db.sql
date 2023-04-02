@@ -1,13 +1,12 @@
-DROP DATABASE IF EXISTS raspberrypi_dmx;
-CREATE DATABASE raspberrypi_dmx CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE raspberrypi_dmx;
+CREATE TABLE
+    IF NOT EXISTS colors (
+        color_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        red INTEGER,
+        green INTEGER,
+        blue INTEGER,
+        alpha DECIMAL(3, 2)
+    );
 
-CREATE TABLE colors
-(
-    pk_color_id INTEGER AUTO_INCREMENT,
-    red         INTEGER,
-    green       INTEGER,
-    blue        INTEGER,
-    alpha       DECIMAL(3, 2),
-    CONSTRAINT PRIMARY KEY (pk_color_id)
-);
+INSERT INTO
+    colors (red, green, blue, alpha)
+VALUES (255, 255, 255, 0.123), (255, 0, 0, 1), (0, 255, 0, 1), (0, 0, 255, 1);

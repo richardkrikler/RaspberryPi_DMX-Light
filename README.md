@@ -38,7 +38,7 @@ As an operating system I have used [Raspbian](https://www.raspberrypi.org/downlo
 
 Installing the Open Lighting Architecture (OLA):
 
-```shell
+```bash
 sudo apt-get install ola
 ```
 
@@ -46,7 +46,7 @@ sudo apt-get install ola
 
 Open the file "rc.local":
 
-```shell
+```bash
 sudo nano /etc/rc.local
 ```
 
@@ -66,7 +66,7 @@ su pi -c olad
 
 Because I am using an FTDI-adapter I will have to add a rule inside of the file "10-local-rpi.rules".
 
-```shell
+```bash
 cd /lib/udev/rules.d
 sudo nano 10-local-rpi.rules
 ```
@@ -116,7 +116,7 @@ Now you can enter the universe via the Web-Interface and go to the DMX-Console. 
 
 Or in the SSH console (e.g.: brightness(128), red(255), green(255), blue(200)):
 
-```shell
+```bash
 ola_streaming_client  --universe 1  --dmx 128,255,255,200
 ```
 
@@ -136,14 +136,20 @@ curl -d u=1 -d d=255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0 "http://192.168.0.128:9
 
 Clone my repository into the folder "/var/www/html".
 
-```shell
+```bash
 sudo git clone https://github.com/RichardKrikler/RaspberryPi_DMX-Light
 ```
 
-Permissions for the file "presets.txt" (global read & write).
+Create presets database.
 
-```shell
-sudo chmod 06 /var/www/html/presets/presets.txt
+```bash
+cat db.sql | sqlite3 presets/raspi-dmx.db
 ```
 
-That's it. Now you can easily get to the Interface via the IP-Adress.
+Permissions for the database to not be read-only (global read & write).
+
+```bash
+sudo chmod 777 /var/www/html/presets/raspi-dmx.db
+```
+
+That's it. Now you can easily get to the Interface via the IP-address.
