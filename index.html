@@ -23,7 +23,9 @@
   </head>
 
   <body>
-    <p>
+    <main>
+      <h1>RaspberryPi DMX-Light</h1>
+
       <input
         id="color-block"
         type="text"
@@ -34,23 +36,27 @@
         data-wcp-sliders="wsvap"
         data-wcp-cssclass="color-block"
         data-wcp-autoresize="false" />
-    </p>
 
-    <p>
-      Selected color:
-      <span id="color-wheel-preview"></span>
-    </p>
+      <div>
+        <span>Selected color:</span>
+        <span id="color-wheel-preview"></span>
+      </div>
 
-    <p for="rgba" id="rgbLabel">RGBA:</p>
-    <input type="text" id="colorInputField" value="255,255,255,0" />
-    <input type="button" id="colorRequestBt" value="CLICK!" />
-    <input type="button" id="clearColorInputFieldBt" value="X" />
-    <input type="button" id="dmxTurnOffBt" value="OFF" />
-    <br />
+      <div>
+        <p for="rgba" id="rgbLabel">RGBA:</p>
+        <input type="text" id="colorInputField" value="255,255,255,0" />
+        <input type="button" id="colorRequestBt" value="CLICK!" />
+        <input type="button" id="clearColorInputFieldBt" value="X" />
+        <input type="button" id="dmxTurnOffBt" value="OFF" />
+      </div>
 
-    <input type="button" value="Reload Presets" id="reloadPresetsBt" />
-    <input type="button" value="Save" id="saveBt" />
-    <input type="button" value="Delete" id="deleteBt" />
-    <div id="presets"></div>
+      <div>
+        <input type="button" value="Reload Presets" id="reloadPresetsBt" />
+        <input type="button" value="Save" id="saveBt" />
+        <input type="button" value="Delete" id="deleteBt" />
+      </div>
+      
+      <div id="presets"></div>
+    </main>
   </body>
 </html>

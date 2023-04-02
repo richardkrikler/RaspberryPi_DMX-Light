@@ -141,7 +141,7 @@ sudo apt-get install php8.1-sqlite
 sudo /etc/init.d/apache2 restart
 ```
 
-Clone my repository into the folder "/var/www/html".
+Clone repository into the folder `/var/www/html`.
 
 ```bash
 sudo git clone https://github.com/RichardKrikler/RaspberryPi_DMX-Light
