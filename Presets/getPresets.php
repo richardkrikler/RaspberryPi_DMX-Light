@@ -1,8 +1,8 @@
 <?php
-$DB = include "../db.php";
+$DB = include '../db.php';
 
 try {
-  $stmt = $DB->prepare("SELECT pk_color_id, red, green, blue, alpha FROM colors");
+  $stmt = $DB->prepare('SELECT color_id, red, green, blue, alpha FROM colors');
 
   if ($stmt->execute()) {
     $presetsAr = array();
@@ -14,6 +14,6 @@ try {
 
   $DB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException  $e) {
-  print("Error: " . $e);
+  print('Error: ' . $e);
   exit();
 }

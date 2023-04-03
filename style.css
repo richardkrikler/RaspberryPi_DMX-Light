@@ -1,10 +1,27 @@
+@font-face {
+  font-family: Ubuntu;
+  src: url(font/Ubuntu-Regular.ttf);
+}
+
 body {
-  font-family: Arial;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 * {
   /* Hide all Outlines of focused Elements */
   outline: none;
+  font-family: 'Ubuntu', Arial, sans-serif !important;
+}
+
+h1 {
+  text-align: center;
 }
 
 #rgbLabel {
@@ -35,19 +52,12 @@ input[type='text'] {
   border-radius: 5px;
 }
 
-/* :not(#rgba) {
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    user-select: none;
-} */
-
 .jQWCP-wWidget.jQWCP-block.color-block {
   background-color: white;
   border: solid 1px black;
   border-radius: 5px;
   box-shadow: none;
+  margin: 0 auto;
 }
 
 input[type='button']:active,
