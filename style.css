@@ -83,3 +83,29 @@ input[type='text']:active,
   border: solid 1px black;
   border-radius: 5px;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #2B2A33;
+  }
+
+  * {
+    color: white;
+  }
+
+  .jQWCP-wWidget.jQWCP-block.color-block {
+    background-color: #2B2A33;
+    border: solid 1px white;
+  }
+
+  input[type='button'],
+  input[type='text'] {
+    background-color: #2B2A33;
+    border: solid 1px white;
+  }
+
+  #color-wheel-preview,
+  p.presets {
+    border: solid 1px white;
+  }
+}
