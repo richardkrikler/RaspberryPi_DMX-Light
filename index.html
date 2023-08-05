@@ -7,7 +7,7 @@
     <title>DMX-Light</title>
 
     <!-- Color Picker -->
-    <script src="colorWheel/jquery-3.4.1.js"></script>
+    <script src="colorWheel/jquery-3.7.0.min.js"></script>
     <script
       type="text/javascript"
       src="colorWheel/jquery.wheelcolorpicker.min.js"></script>
@@ -20,6 +20,7 @@
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css" />
     <script src="presets/presets.js" defer></script>
+    <script src="colorTransition.js" defer></script>
   </head>
 
   <body>
@@ -51,11 +52,21 @@
       </div>
 
       <div>
+        <div style="display: flex; flex-direction: row;">
+          <p class="transitionColor" id="transitionColor1"></p>
+          <p class="transitionColor" id="transitionColor2"></p>
+        </div>
+        <input type="button" value="Set F" id="setFromBt" />
+        <input type="button" value="Set T" id="setToBt" />
+        <input type="button" value="Start Transition" id="startTransitionBt" />
+      </div>
+
+      <div>
         <input type="button" value="Reload Presets" id="reloadPresetsBt" />
         <input type="button" value="Save" id="saveBt" />
         <input type="button" value="Delete" id="deleteBt" />
       </div>
-      
+
       <div id="presets"></div>
     </main>
   </body>

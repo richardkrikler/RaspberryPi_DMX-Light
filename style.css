@@ -44,7 +44,7 @@ input[type='text'] {
   flex-wrap: wrap;
 }
 
-.presets {
+.presets, .transitionColor {
   width: 40px;
   height: 40px;
   margin: 10px;
@@ -105,7 +105,8 @@ input[type='text']:active,
   }
 
   #color-wheel-preview,
-  p.presets {
+  p.presets,
+  .transitionColor {
     border: solid 1px white;
   }
 }
