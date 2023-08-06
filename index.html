@@ -52,12 +52,18 @@
       </div>
 
       <div>
-        <div style="display: flex; flex-direction: row;">
+        <div style="display: flex; flex-direction: row">
           <p class="transitionColor" id="transitionColor1"></p>
           <p class="transitionColor" id="transitionColor2"></p>
         </div>
-        <input type="button" value="Set F" id="setFromBt" />
-        <input type="button" value="Set T" id="setToBt" />
+        <div>
+          <input type="button" value="Set F" id="setFromBt" />
+          <input type="button" value="Set T" id="setToBt" />
+        </div>
+        <div>
+          <input type="number" placeholder="Colors" id="colorCountField" />
+          <input type="number" placeholder="MS" id="msBetweenColorsField" min="20"/>
+        </div>
         <input type="button" value="Start Transition" id="startTransitionBt" />
       </div>
 

@@ -1,25 +1,48 @@
 let setFromBt = document.getElementById('setFromBt')
 let setToBt = document.getElementById('setToBt')
 let startTransitionBt = document.getElementById('startTransitionBt')
+let colorCountField = document.getElementById('colorCountField')
+let msBetweenColorsField = document.getElementById('msBetweenColorsField')
 let transitionColor1 = document.getElementById('transitionColor1')
 let transitionColor2 = document.getElementById('transitionColor2')
 let fromColor
 let toColor
+let colorCount = 10
+let msBetweenColors = 1000
 
 setFromBt.addEventListener('click', () => {
   fromColor = Object.values(currentColorObj.getValues())
-  transitionColor1.style.backgroundColor = 'rgba(' + currentColorObj.getRgbaString() + ')'
+  transitionColor1.style.backgroundColor =
+    'rgba(' + currentColorObj.getRgbaString() + ')'
 })
 
 setToBt.addEventListener('click', () => {
   toColor = Object.values(currentColorObj.getValues())
-  transitionColor2.style.backgroundColor = 'rgba(' + currentColorObj.getRgbaString() + ')'
+  transitionColor2.style.backgroundColor =
+    'rgba(' + currentColorObj.getRgbaString() + ')'
+})
+
+colorCountField.addEventListener('change', () => {
+  colorCount = colorCountField.value
+})
+
+msBetweenColorsField.addEventListener('change', () => {
+  msBetweenColors = msBetweenColorsField.value
 })
 
 startTransitionBt.addEventListener('click', () => {
-  let colors = calculateColors(fromColor, toColor, 10)
-  console.log(colors)
+  let colors = calculateColors(fromColor, toColor, colorCount)
+  colorTransition(colors)
 })
+
+function colorTransition(colors) {
+  for (let c = 0; c < colors.length; c++) {
+    setTimeout(() => {
+      console.log(colors[c])
+      postDMX(new ColorObj(...colors[c], fromColor[3]).getDmxObj())
+    }, msBetweenColors * c)
+  }
+}
 
 function calculateColors(startColor, endColor, steps) {
   let colors = []

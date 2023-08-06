@@ -29,6 +29,7 @@ h1 {
 }
 
 input[type='button'],
+input[type='number'],
 input[type='text'] {
   margin: 10px 0px;
   height: 25px;
@@ -99,6 +100,7 @@ input[type='text']:active,
   }
 
   input[type='button'],
+  input[type='number'],
   input[type='text'] {
     background-color: #2B2A33;
     border: solid 1px white;
